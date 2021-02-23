@@ -30,7 +30,8 @@ function saveRecord(record) {
   const store = transaction.objectStore("pending");
 
   // add record to your store with add method.
-  const getAll = store.getAll();
+  store.add(record);
+
 }
 
 function checkDatabase() {
