@@ -1,13 +1,17 @@
 let db;
-// create a new db request for a "budget" database.
+//creating a new db request for budget db
+const request = indexedDB.open("budget",1);
 
 request.onupgradeneeded = function (event) {
   // create object store called "pending" and set autoIncrement to true
+  const db = event.target.result;
+  db.createObjectStore("pending", {autoIncrement: true});
 };
 
 request.onsuccess = function (event) {
   db = event.target.result;
 
+  //checks to see if the application is online before db starts
   if (navigator.onLine) {
     checkDatabase();
   }
@@ -15,6 +19,7 @@ request.onsuccess = function (event) {
 
 request.onerror = function (event) {
   // log error here
+  console.log("UH OH! " + event.target.errorCode);
 };
 
 function saveRecord(record) {
